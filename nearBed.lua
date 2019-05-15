@@ -4,13 +4,6 @@ require "nearWindow"
 nearBed = room {
 	nam = 'nearBed',
 	disp = 'Около кровати',
-	onexit = function(s,f)
-		if me().dressed then
-			return false
-		else
-			return true
-		end;
-	end;
 	obj = { 
 		'chair',
 		'lieOnBed',
@@ -19,6 +12,13 @@ nearBed = room {
 	way = {
 		'nearWindow'
 	};
+	exit = function(s,t)
+		if me().dressed or t.nam == 'main' or t.nam == 'ceiling' then
+			return true;
+		else
+			return [[Сначала неплохо бы одеться.]], false;
+		end
+	end;
 };
 
 lieOnBed = obj {
@@ -38,7 +38,7 @@ chair = obj {
 	nam = 'chair',
 	dsc = "Недалеко от себя вы видите {стул}.",
 	act = function()
-		p [[Стул как стул. Если не считать того, что он достался вам от родителей и, должно быть, сильно старше вас.]]
+		p [[Стул как стул. Если не считать того, что он очень крепок и явно старше вас.]]
 	end;
 	obj = {
 		'clothes'
@@ -47,17 +47,48 @@ chair = obj {
 
 clothes = obj {
 	nam = 'clothes',
-	disp = "Одежда",
-	dsc = "На стуле лежит {одежда}",
-	tak = "Вы взяли одежду",
-	inv = function(s)
-		if me().standing then
-			p "Вы оделись.";
+	disp = function()
+		if me().dressed then
+			return "Одежда (надето)"
 		else
-			p "Лежа одеваться не очень удобно, но вы справились.";
+			return "Одежда"
+		end
+	end;
+	dsc = "На стуле висит {одежда}.",
+	tak = "Вы взяли одежду.",
+	inv = function(s)
+		if me().dressed then
+			p "Вы разделись.";
+			me().dressed = false;
+
+		else
+			p "Вы оделись.";
+			me().dressed = true;
+
+		end
+
+		if me().standing ~= true then
+			p [[Вы делали это лежа, так что пришлось повозиться.]];
 		end;
-		me().dressed = true;
-		s:remove();
+	end;
+	use = function(s,w)
+		if w.nam == 'chair' then
+			drop(s);
+
+			if me().dressed then
+				me().dressed = false;
+				p [[Вы сняли одежду и повесили ее на стул.]];
+			else
+				p [[Вы повесили одежду на стул.]];
+			end
+
+			remove(s);
+			w.obj:add(s, 1);
+			
+			return true
+		else
+			return false
+		end;
 	end;
 };
 

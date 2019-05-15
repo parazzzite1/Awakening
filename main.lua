@@ -13,14 +13,17 @@ game.act = 'Не получается.';
 game.inv = "Гм.. Не то..";
 game.use = 'Не сработает...';
 
-game.player = {
-	nam = 'player',
-	room = main,
-	awoke = false,
-	gotUpOnce = false,
-	standing = false,
-	dressed = false
-};
+function init()
+	game.player = {
+		nam = 'player',
+		room = main,
+		awoke = false,
+		gotUpOnce = false,
+		standing = false,
+		dressed = false,
+		nudist = false
+	};
+end;
 
 lookAround = obj {
 	nam = 'lookAround',

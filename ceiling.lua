@@ -27,8 +27,8 @@ ceiling = room {
 };
 
 lookAtCeiling = obj {
-	nam = 'lookAtCeiling';
-	dsc = "^^{Осмотреть потолок}";
+	nam = 'lookAtCeiling',
+	dsc = "^^{Осмотреть потолок}",
 	act = function(s)
 		me().awoke = true;
 		
