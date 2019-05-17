@@ -9,11 +9,14 @@ require "quotes"
 require "ceiling"
 require "nearBed"
 
-game.act = 'Не получается.';
-game.inv = "Гм.. Не то..";
-game.use = 'Не сработает...';
+-- Game Init
 
 function init()
+	game.act = 'Не получается.';
+	game.inv = "Гм.. Не то..";
+	game.use = 'Не сработает...';
+
+
 	game.player = {
 		nam = 'player',
 		room = main,
@@ -25,17 +28,7 @@ function init()
 	};
 end;
 
-lookAround = obj {
-	nam = 'lookAround',
-	dsc = "^^{Встать и осмотреться}",
-	act = function() 
-		p [[Вы встаете с кровати. Солнечный свет из окна бьет прямо в лицо.]];
-		me().awoke = true;
-		me().gotUpOnce = true;
-		me().standing = true;
-		walk('nearBed');
-	end;
-};
+-- Room
 
 main = room {
 	nam = 'main',
@@ -55,5 +48,18 @@ main = room {
 	};
 };
 
+-- Transitions
 
+lieOnBed = obj {
+	nam = 'lieOnBed',
+	dsc = "^^{Лечь на кровать}",
+	act = function()
+		p [[И снова под одеяло.]];
+		if me().dressed then
+			p [[В одежде - ну и ладно.]]
+		end;
+		me().standing = false;
+		walk('main');
+	end;	
+};
 

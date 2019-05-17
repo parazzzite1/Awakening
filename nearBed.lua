@@ -1,6 +1,8 @@
 require "ceiling" 
 require "nearWindow"
 
+-- Room
+
 nearBed = room {
 	nam = 'nearBed',
 	disp = 'Около кровати',
@@ -21,18 +23,21 @@ nearBed = room {
 	end;
 };
 
-lieOnBed = obj {
-	nam = 'lieOnBed',
-	dsc = "^^{Лечь на кровать}",
-	act = function()
-		p [[И снова под одеяло.]];
-		if me().dressed then
-			p [[В одежде - ну и ладно.]]
-		end;
-		me().standing = false;
-		walk('main');
-	end;	
+-- Transitions
+
+lookAround = obj {
+	nam = 'lookAround',
+	dsc = "^^{Встать и осмотреться}",
+	act = function() 
+		p [[Вы встаете с кровати. Солнечный свет из окна бьет прямо в лицо.]];
+		me().awoke = true;
+		me().gotUpOnce = true;
+		me().standing = true;
+		walk('nearBed');
+	end;
 };
+
+-- Objects
 
 chair = obj {
 	nam = 'chair',
