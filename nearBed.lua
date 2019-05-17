@@ -47,8 +47,9 @@ chair = obj {
 
 clothes = obj {
 	nam = 'clothes',
-	disp = function()
-		if me().dressed then
+	wearing = false,
+	disp = function(s)
+		if s.wearing then
 			return "Одежда (надето)"
 		else
 			return "Одежда"
@@ -60,11 +61,11 @@ clothes = obj {
 		if me().dressed then
 			p "Вы разделись.";
 			me().dressed = false;
-
+			s.wearing = false;
 		else
 			p "Вы оделись.";
 			me().dressed = true;
-
+			s.wearing = true;
 		end
 
 		if me().standing ~= true then
@@ -74,20 +75,24 @@ clothes = obj {
 	use = function(s,w)
 		if w.nam == 'chair' then
 			drop(s);
-
-			if me().dressed then
+			
+			if me().dressed and s.wearing then
 				me().dressed = false;
+				s.wearing = false;
+
 				p [[Вы сняли одежду и повесили ее на стул.]];
 			else
+				s.wearing = false;
+
 				p [[Вы повесили одежду на стул.]];
 			end
 
 			remove(s);
 			w.obj:add(s, 1);
 			
-			return true
+			return true;
 		else
-			return false
+			return false;
 		end;
 	end;
 };
