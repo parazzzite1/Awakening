@@ -2,7 +2,7 @@ web = obj {
 	nam = 'web',
 	dsc = "В углу разрослась {паутина}.",
 	act = function()
-		p [[Не дотянуться.]]
+		p [[Похоже, что паутина появилась тут недавно.]];
 	end;
 };
 
@@ -10,7 +10,34 @@ spider = obj {
 	nam = 'spider',
 	dsc = "В паутине вы замечаете довольно крупного {паука}.",
 	act = function()
-		p [[Ослик, суслик, пауканн ...]];
+		p [[Похоже это Araneus diadematus - крестовик обыкновенный.^^Одному богу известно, как он здесь очутился.]];
+	end;
+};
+
+paper = obj {
+	nam = 'paper',
+
+	read = false,
+	
+	dsc = [[В паутине заcстрял {кусочек бумаги}.]],
+	disp = function(s)
+		if s.read then
+			p "Бумажка (прочитано)";
+		else
+			p "Бумажка";
+		end
+	end;
+	inv = function(s)
+		p [[На бумажке написано: "Оставь паука в покое".]];
+		s.read = true;
+	end;
+	tak = function()
+		if me().standing then
+			p [[Вы подпрыгиваете и хватаете бумажку так, что паутина ходит ходуном. Паук напуган.]];
+			return true;
+		else
+			return false;
+		end
 	end;
 };
 
@@ -39,6 +66,7 @@ lookAtCeiling = obj {
 			p [[Вы внимательно осматриваете потолок.]];
 			ceiling.obj:add(web);
 			ceiling.obj:add(spider);
+			ceiling.obj:add(paper);
 		end;
 
 		local currentRoom = here();
