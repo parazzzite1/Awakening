@@ -58,7 +58,9 @@ lieOnBed = obj {
 		if me().dressed then
 			p [[В одежде - ну и ладно.]]
 		end;
+
 		me().standing = false;
+		
 		walk('main');
 	end;	
 };

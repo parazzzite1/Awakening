@@ -6,14 +6,17 @@ require "nearWindow"
 nearBed = room {
 	nam = 'nearBed',
 	disp = 'Около кровати',
+
 	obj = { 
 		'chair',
 		'lieOnBed',
 		'lookAtCeiling'
 	};
+
 	way = {
 		'nearWindow'
 	};
+
 	exit = function(s,t)
 		if me().dressed or t.nam == 'main' or t.nam == 'ceiling' then
 			return true;
@@ -28,11 +31,14 @@ nearBed = room {
 lookAround = obj {
 	nam = 'lookAround',
 	dsc = "^^{Встать и осмотреться}",
+
 	act = function() 
 		p [[Вы встаете с кровати. Солнечный свет из окна бьет прямо в лицо.]];
+
 		me().awoke = true;
 		me().gotUpOnce = true;
 		me().standing = true;
+		
 		walk('nearBed');
 	end;
 };
@@ -42,9 +48,11 @@ lookAround = obj {
 chair = obj {
 	nam = 'chair',
 	dsc = "Недалеко от себя вы видите {стул}.",
+
 	act = function()
 		p [[Стул как стул. Если не считать того, что он очень крепок и явно старше вас.]]
 	end;
+
 	obj = {
 		'clothes'
 	};
@@ -52,7 +60,9 @@ chair = obj {
 
 clothes = obj {
 	nam = 'clothes',
+
 	wearing = false,
+
 	disp = function(s)
 		if s.wearing then
 			return "Одежда (надето)"
@@ -60,8 +70,10 @@ clothes = obj {
 			return "Одежда"
 		end
 	end;
+
 	dsc = "На стуле висит {одежда}.",
 	tak = "Вы взяли одежду.",
+
 	inv = function(s)
 		if me().dressed then
 			p "Вы разделись.";
@@ -77,6 +89,7 @@ clothes = obj {
 			p [[Вы делали это лежа, так что пришлось повозиться.]];
 		end;
 	end;
+
 	use = function(s,w)
 		if w.nam == 'chair' then
 			drop(s);
@@ -93,7 +106,7 @@ clothes = obj {
 			end
 
 			remove(s);
-			w.obj:add(s, 1);
+			w.obj:add(s);
 			
 			return true;
 		else
