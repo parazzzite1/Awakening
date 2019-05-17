@@ -49,9 +49,11 @@ lookAtCeiling = obj {
 web = obj {
 	nam = 'web',
 	dsc = "В углу разрослась {паутина}.",
+
 	act = function()
 		p [[Похоже, что паутина появилась тут недавно.]];
 	end;
+
 	obj = {
 		'spider',
 		'paper'
@@ -61,6 +63,7 @@ web = obj {
 spider = obj {
 	nam = 'spider',
 	dsc = "В паутине вы замечаете довольно крупного {паука}.",
+
 	act = function()
 		p [[Похоже это Araneus diadematus - крестовик обыкновенный.^^Одному богу известно, как он здесь очутился.]];
 	end;
