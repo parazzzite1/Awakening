@@ -4,6 +4,10 @@ web = obj {
 	act = function()
 		p [[Похоже, что паутина появилась тут недавно.]];
 	end;
+	obj = {
+		'spider',
+		'paper'
+	};
 };
 
 spider = obj {
@@ -19,7 +23,8 @@ paper = obj {
 
 	read = false,
 	
-	dsc = [[В паутине заcстрял {кусочек бумаги}.]],
+	dsc = [[В паутине застрял {кусочек бумаги}.]],
+
 	disp = function(s)
 		if s.read then
 			p "Бумажка (прочитано)";
@@ -27,10 +32,12 @@ paper = obj {
 			p "Бумажка";
 		end
 	end;
+
 	inv = function(s)
 		p [[На бумажке написано: "Оставь паука в покое".]];
 		s.read = true;
 	end;
+
 	tak = function()
 		if me().standing then
 			p [[Вы подпрыгиваете и хватаете бумажку так, что паутина ходит ходуном. Паук напуган.]];
@@ -44,12 +51,18 @@ paper = obj {
 ceiling = room {
 	nam = 'ceiling',
 	disp = "Потолок",
+
 	dsc = function()
 		p [[На белой штукатурке местами виднеются желтоватые пятна - крыша уже давно протекает во время сильных дождей.]];
 		if me().standing ~= true then
 			p [[^^Кажется в дальнем углу виднеется старая паутина.]];
 		end;
 	end;
+
+	obj = {
+		'web'
+	};
+
 	way = { };
 };
 
@@ -59,14 +72,12 @@ lookAtCeiling = obj {
 	act = function(s)
 		me().awoke = true;
 		
-		ceiling.obj:zap();
 		if me().standing ~= true then
 			p [[Приподняв голову с подушки вы пытаетесь разглядеть потолок получше. Наверное, лучше встать с кровати чтобы разобрать больше деталей.]];
+			ceiling.obj:del('web');
 		else
 			p [[Вы внимательно осматриваете потолок.]];
-			ceiling.obj:add(web);
-			ceiling.obj:add(spider);
-			ceiling.obj:add(paper);
+			ceiling.obj:add('web');
 		end;
 
 		local currentRoom = here();
