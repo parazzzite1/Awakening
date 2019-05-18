@@ -7,6 +7,17 @@ nearBed = room {
 	nam = 'nearBed',
 	disp = 'Около кровати',
 
+	decor = function(s)
+		p [[Недалеко от себя вы видите {chair|стул}.]];
+		if chair.obj:srch('clothes') then
+			p [[На стуле висит {clothes|одежда}.]];
+		end
+
+		p [[^^{lieOnBed|Лечь на кровать}]];
+		p [[^^{lookAtCeiling|Осмотреть потолок}]];
+
+	end;
+
 	obj = { 
 		'chair',
 		'lieOnBed',
@@ -17,7 +28,7 @@ nearBed = room {
 		'window'
 	};
 
-	exit = function(s,t)
+	onexit = function(s,t)
 		if me().dressed or t.nam == 'main' or t.nam == 'ceiling' then
 			return true;
 		else
@@ -28,26 +39,25 @@ nearBed = room {
 
 -- Transitions
 
-lookAround = obj {
-	nam = 'lookAround',
-	dsc = "^^{Встать и осмотреться}",
+lieOnBed = obj {
+	nam = 'lieOnBed',
+	
+	act = function()
+		p [[И снова под одеяло.]];
+		if me().dressed then
+			p [[В одежде - ну и ладно.]]
+		end;
 
-	act = function() 
-		p [[Вы встаете с кровати. Солнечный свет из окна бьет прямо в лицо.]];
-
-		me().awoke = true;
-		me().gotUpOnce = true;
-		me().standing = true;
+		me().standing = false;
 		
-		walk('nearBed');
-	end;
+		walk('main');
+	end;	
 };
 
 -- Objects
 
 chair = obj {
 	nam = 'chair',
-	dsc = "Недалеко от себя вы видите {стул}.",
 
 	act = function()
 		p [[Стул как стул. Если не считать того, что он очень крепок и явно старше вас.]]
@@ -70,12 +80,11 @@ clothes = obj {
 			return "Одежда"
 		end
 	end;
-
-	dsc = "На стуле висит {одежда}.",
+	
 	tak = "Вы взяли одежду.",
 
 	inv = function(s)
-		if me().dressed then
+		if s.wearing then
 			p "Вы разделись.";
 			me().dressed = false;
 			s.wearing = false;

@@ -6,12 +6,38 @@ window = room {
 	nam = 'window',
 	disp = 'Окно',
 	
+	decor = function(s)
+		if s.obj:srch('transitionWindowView') then
+			p [[Из окна открывается {transitionWindowView|вид} на дальние луга и холмы.]];
+		end
+
+		if s.obj:srch('investigateFrame') then
+			p [[^^{investigateFrame|Изучить окно}]];
+		end
+
+		if s.obj:srch('openCloseFrame') then
+			if frame.shut then
+				p [[^^{openCloseFrame|Открыть окно}]];
+			else
+				p [[^^{openCloseFrame|Закрыть окно}]];
+			end
+		end
+
+		if s.obj:srch('latch') then
+			if latch.locked then
+				p [[^^{latch|Шпингалет} опущен.]];
+			else
+				p [[^^{latch|Шпингалет} поднят.]];
+			end
+		end
+	end;
+
 	obj = {
 		'transitionWindowView',
 		'investigateFrame'
 	};
 	
-	enter = function(s,f)
+	onenter = function(s,f)
 		if f.nam ~= 'windowView' then
 			p [[Вы подходите к окну.]];
 
@@ -27,15 +53,7 @@ latch = obj {
 	nam = 'latch',
 
 	locked = false,
-
-	dsc = function(s)
-		if s.locked then
-			p [[{^^Шпингалет} опущен.]];
-		else
-			p [[{^^Шпингалет} поднят.]]
-		end
-	end;
-
+	
 	act = function(s)
 		p [[Старый немного проржавевший шпингалет ]];
 		if s.locked then
@@ -57,8 +75,6 @@ frame = obj {
 transitionWindowView = obj {
 	nam = 'transitionWindowView',
 
-	dsc = [[Из окна открывается {вид} на дальние луга и холмы.]],
-	
 	act = function(s)
 		walk('windowView');
 	end;
@@ -67,9 +83,7 @@ transitionWindowView = obj {
 -- Actions
 
 investigateFrame = obj {
-	nam = 'investigateWindow',
-
-	dsc = "^^{Изучить окно}",
+	nam = 'investigateFrame',
 	
 	act = function(s)
 		if frame.shut then
@@ -86,11 +100,11 @@ investigateFrame = obj {
 			end
 		end
 
-		s.obj:del(openCloseFrame);
-		s.obj:del(latch);
+		window.obj:del(openCloseFrame);
+		window.obj:del(latch);
 		
-		s.obj:add(openCloseFrame);
-		s.obj:add(latch);
+		window.obj:add(openCloseFrame);
+		window.obj:add(latch);
 
 	end;
 
@@ -98,14 +112,6 @@ investigateFrame = obj {
 
 openCloseFrame = obj {
 	nam = 'openCloseFrame',
-
-	dsc = function(s)
-		if frame.shut then
-			p "^^{Открыть окно}";
-		else
-			p "^^{Закрыть окно}";
-		end
-	end;
 	
 	act = function(s)
 		if latch.locked then
