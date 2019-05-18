@@ -84,6 +84,12 @@ clothes = obj {
 	tak = "Вы взяли одежду.",
 
 	inv = function(s)
+		local currentRoom = here();
+		if s.wearing and currentRoom.nam ~= 'nearBed' and currentRoom.nam ~= 'main' then
+			p "Лучше не стоит.";
+			return false;
+		end
+
 		if s.wearing then
 			p "Вы разделись.";
 			me().dressed = false;
