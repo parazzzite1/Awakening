@@ -1,5 +1,5 @@
 require "ceiling" 
-require "nearWindow"
+require "window"
 
 -- Room
 
@@ -14,7 +14,7 @@ nearBed = room {
 	};
 
 	way = {
-		'nearWindow'
+		'window'
 	};
 
 	exit = function(s,t)
