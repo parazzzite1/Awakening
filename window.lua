@@ -44,7 +44,10 @@ window = room {
 		end
 	end;
 
-	way = { 'nearBed' };
+	way = { 
+		'nearBed',
+		'desk'
+	};
 };
 
 -- Objects
