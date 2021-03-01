@@ -14,8 +14,11 @@ desk = room {
 		if s.obj:srch('folder') then
 			p [[^^На ней валяется пустая {folder|папка} для бумаг и несколько исписанных листов.]];
 		end;
+		
+		if s.obj:srch('lamp') then
+			p [[В углу стола стоит керасиновая {lamp|лампа}.]];
+		end;
 
-		p [[В углу стола стоит керасиновая {lamp|лампа}.]];
 		p [[^^Под столешницей есть {drawer|выдвижной ящик}.]];
 	end;
 
@@ -71,17 +74,30 @@ clips = obj {
 lamp = obj {
 	nam = 'lamp',
 
-	filled = true,
+	filled = false,
 	on = false,
 
-	act = function(s)
-		if lamp.empty then
+	tak = "Вы взяли керасиновую лампу.",
+
+	disp = function(s)
+		if s.on then
+			return "Лампа (горит)"
+		else
+			return "Лампа (не горит)"
+		end
+	end;
+
+
+	inv = function(s)
+		if not lamp.filled then
 			p [[В лампе нет керасина. Надо наполнить ее, пережде чем использовать.]];
 		else
-			if s.on == false then
+			if not s.on then
 				p [[Вы включаете лампу и из нее тут же начинает струиться теплый свет.]];
+				s.on = true;
 			else
 				p [[Вы выключаете лампу.]];
+				s.on = false;
 			end
 		end
 	end;

@@ -7,7 +7,7 @@ require "desk"
 
 nearBed = room {
 	nam = 'nearBed',
-	disp = 'Около кровати',
+	disp = 'Кровать',
 
 	decor = function(s)
 		p [[Недалеко от себя вы видите {chair|стул}.]];
