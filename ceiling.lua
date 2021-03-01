@@ -2,7 +2,7 @@
 
 ceiling = room {
 	nam = 'ceiling',
-	disp = "Потолокк",
+	disp = "Потолок",
 
 	dsc = function()
 		p [[На белой штукатурке местами виднеются желтоватые пятна - должно быть, крыша протекает во время сильных дождей.]];
@@ -71,8 +71,9 @@ spider = obj {
 
 paper = obj {
 	nam = 'paper',
-
+	
 	read = false,
+	noteLooking = true,
 	
 	dsc = [[В паутине застрял {кусочек бумаги}.]],
 
