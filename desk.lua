@@ -36,7 +36,7 @@ drawer = obj {
 
 	act = function(s)
 		if s.obj:empty() then
-			p [[Больше в ящике нет ничего интересного.]];
+			p [[Больше в ящике нет ничего ценного.]];
 		else
 			p [[В ящике вы находите скрепки и чистые листы бумаги.]];
 
@@ -54,7 +54,7 @@ drawer = obj {
 clips = obj {
 	nam = 'clips',
 	disp = "Скрепки",
-	inv = "Скрепки для бумаги. Ими можно скреплять не только бумагу.",
+	inv = "Скрепки для бумаги. Или еще чего.",
 	use = function(s, w)
 		if w.nam == 'papers' then
 			p [[Действительно, почему бы не скрепить скрепками для бумаги бумагу? Но может быть попытаться использовать их как-то иначе?]];
@@ -184,6 +184,7 @@ function noteLookingUsage(s, w)
 	if w.noteLooking and not noteInDiary(w, s) then
 		remove(w);
 		table.insert(s.notes, w);
+		p [[Вы вложили новую записку в дневник.]]
 		if s.state then
 			s.obj:add(w);
 		end
