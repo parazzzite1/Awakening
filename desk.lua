@@ -84,7 +84,7 @@ lamp = obj {
 	is_filled = false,
 	is_on = false,
 
-	tak = "Вы взяли керасиновую лампу.",
+	tak = "Вы взяли керосиновую лампу.",
 
 	disp = function(s)
 		if s.is_on then
@@ -97,7 +97,7 @@ lamp = obj {
 
 	inv = function(s)
 		if not lamp.is_filled then
-			p [["... и врут календaри ..." В лампе нет керасина. Надо наполнить ее, пережде чем использовать.]];
+			p [["... и врут календaри ..." В лампе нет керосина. Надо наполнить ее, пережде чем использовать.]];
 		else
 			if not s.is_on then
 				p [[Вы включаете лампу и из нее начинает струиться теплый свет.]];
@@ -110,7 +110,7 @@ lamp = obj {
 	end;
 
 	use = function(s, w)
-		if w.nam == 'pot' and w.is_investigated and w.substance.nam == 'kerosene' then
+		if w.nam == 'pot' and w.is_investigated and w.substance and w.substance.nam == 'kerosene' then
 			p [[Вы пытаетесь засунуть лампу в банку с керосином, но тщетно.]];
 		end
 
@@ -123,7 +123,7 @@ lamp = obj {
 				s.is_filled = true;
 				w.substance = nil;
 
-				p [[Вы наполняете керасиновую лампу. Да будет свет!]];
+				p [[Вы наполняете керосиновую лампу. Да будет свет!]];
 			else
 				if not w.is_investigated then
 					p [[Надо сначала понять, что в банке.]];

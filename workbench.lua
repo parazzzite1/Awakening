@@ -81,7 +81,7 @@ pot = obj {
 	inv = function(s)
 		if not s.is_investigated and s.substance then
 			s.is_investigated = true;
-			return string.format("Вы открываете банку и изучаете содержимоей - в ней %s.", std.dispof(s.substance));
+			return string.format("Вы открываете банку и изучаете содержимое - в ней %s.", std.dispof(s.substance));
 		elseif s.substance then
 			return string.format("В банке %s.%s", std.dispof(s.substance), pot_extra_inv_msg(s));
 		else
@@ -92,6 +92,7 @@ pot = obj {
 
 	use = function(s, w)
 		if not s.is_investigated then
+			-- Если вы не знаете, что в банке, то ее никак не использовать
 			p[[Сначал надо понять что в банке.]];
 			return false;
 		end
