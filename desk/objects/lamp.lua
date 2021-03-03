@@ -1,3 +1,6 @@
+
+-- Objects
+
 lamp = obj {
 	nam = 'lamp',
 	

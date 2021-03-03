@@ -29,7 +29,7 @@ main = room {
 	disp = "Кровать";
 
 	dsc = function()
-		if me().awoke ~= true then
+		if not me().awoke then
 			p [[Вы чувствуете что проснулись. Голова немного гудит. Открыв глаза вы видите знакомый белый потолок.]];
 		elseif me().gotUpOnce ~= true then
 			p [[Вы проснулись и лежите на кровати. Что дальше?]];

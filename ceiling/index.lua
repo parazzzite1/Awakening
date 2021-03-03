@@ -1,3 +1,4 @@
+
 -- Room
 
 ceiling = room {
