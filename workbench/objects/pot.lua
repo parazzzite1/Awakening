@@ -1,54 +1,5 @@
--- Room
-
-workbench = room {
-	nam = 'workbench',
-
-	disp = 'Верстак',
-
-	way = {
-		'desk',
-		'window',
-		'nearBed'
-	};
-
-	decor = function(s)
-		p [[Перед вами крепкий столярный верстак.]];
-		if s.obj:srch('hummer') then
-			p [[^^Среди интрументов вы подмечаете {hummer|молоток}.]];
-		end
-
-		if s.obj:srch('pot') then
-			p [[^^Над верстаком на полке стоит плотно закрытая жестяная {pot|банка}.]];
-		end
-
-		if s.obj:empty() then
-			p [[Кажется, здесь больше нет ничего интересного.]];
-		end
-	end;
-
-	obj = {
-		'hummer',
-		'pot'
-	};
-};
 
 -- Objects
-
-hammer = obj {
-	nam = 'hummer',
-	disp = 'Молоток',
-
-	tak = "Вы взяли молоток",
-
-	inv = "Увесистый такой, пригодится."
-};
-
-kerosene = obj {
-	is_substance = true,
-
-	nam = 'kerosene';
-	disp = 'керосин';
-};
 
 pot = obj {
 	is_investigated = false,
@@ -127,6 +78,8 @@ pot = obj {
 		return false;
 	end;
 };
+
+-- Utils
 
 function pot_extra_inv_msg(s)
 	if s.substance.nam == 'kerosene' then

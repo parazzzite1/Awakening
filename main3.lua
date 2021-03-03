@@ -6,9 +6,6 @@ require "fmt"
 fmt.dash = true
 fmt.quotes = true
 
-require "ceiling"
-require "nearBed"
-
 -- Game Init
 
 game.act = 'Не получается.';
@@ -53,6 +50,9 @@ main = room {
 };
 
 -- Transitions
+
+require "ceiling.index"
+require "nearBed.index"
 
 lookAround = obj {
 	nam = 'lookAround',
