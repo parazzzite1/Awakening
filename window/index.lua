@@ -4,21 +4,21 @@
 window = room {
 	nam = 'window',
 	disp = 'Окно',
-	
+
 	decor = function(s)
-		if s.obj:srch('transitionWindowView') then
-			p [[Из окна открывается {transitionWindowView|вид} на дальние луга и холмы.]];
+		if s.obj:srch('transition_window_view') then
+			p [[Из окна открывается {transition_window_view|вид} на дальние луга и холмы.]];
 		end
 
-		if s.obj:srch('investigateFrame') then
-			p [[^^{investigateFrame|Изучить окно}]];
+		if s.obj:srch('investigate_frame') then
+			p [[^^{investigate_frame|Изучить окно}]];
 		end
 
-		if s.obj:srch('openCloseFrame') then
+		if s.obj:srch('open_close_frame') then
 			if frame.is_shut then
-				p [[^^{openCloseFrame|Открыть окно}]];
+				p [[^^{open_close_frame|Открыть окно}]];
 			else
-				p [[^^{openCloseFrame|Закрыть окно}]];
+				p [[^^{open_close_frame|Закрыть окно}]];
 			end
 		end
 
@@ -32,19 +32,19 @@ window = room {
 	end;
 
 	obj = {
-		'transitionWindowView',
-		'investigateFrame'
+		'transition_window_view',
+		'investigate_frame'
 	};
-	
+
 	onenter = function(s,f)
-		if f.nam ~= 'windowView' then
+		if f.nam ~= 'window_view' then
 			p [[Вы подходите к окну.]];
 
 		end
 	end;
 
-	way = { 
-		'nearBed',
+	way = {
+		'near_bed',
 		'desk',
 		'workbench'
 	};
@@ -56,17 +56,16 @@ require "window.objects"
 
 -- Transitions
 
-require "windowView" 
+require "window_view"
 
-transitionWindowView = obj {
-	nam = 'transitionWindowView',
+transition_window_view = obj {
+	nam = 'transition_window_view',
 
 	act = function(s)
-		walk('windowView');
+		walk('window_view');
 	end;
 };
 
 -- Actions
 
 require "window.actions"
-

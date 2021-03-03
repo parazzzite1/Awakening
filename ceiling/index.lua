@@ -7,7 +7,7 @@ ceiling = room {
 
 	dsc = function()
 		p [[На белой штукатурке местами виднеются желтоватые пятна - должно быть, крыша протекает во время сильных дождей.]];
-		if not me().standing then
+		if not me().is_standing then
 			p [[^^Кажется в дальнем углу виднеется старая паутина.]];
 		end;
 	end;
@@ -21,13 +21,13 @@ ceiling = room {
 
 -- Transitions
 
-lookAtCeiling = obj {
-	nam = 'lookAtCeiling',
+look_at_ceiling = obj {
+	nam = 'look_at_ceiling',
 
 	act = function(s)
-		me().awoke = true;
-		
-		if not me().standing then
+		me().is_awoken = true;
+
+		if not me().is_standing then
 			p [[Приподняв голову с подушки вы бегло оглядываете потолок. Наверное, лучше встать с кровати чтобы разобрать больше деталей.]];
 			ceiling.obj:del('web');
 		else
@@ -38,7 +38,7 @@ lookAtCeiling = obj {
 		local currentRoom = here();
 		ceiling.way:zap();
 		ceiling.way:add(currentRoom, 0);
-		
+
 		walk('ceiling');
 
 		return true;
@@ -48,4 +48,3 @@ lookAtCeiling = obj {
 -- Objects
 
 require "ceiling.objects"
-

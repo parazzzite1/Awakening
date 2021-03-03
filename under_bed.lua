@@ -1,7 +1,7 @@
 -- Room
 
-underBed = room {
-	nam = 'underBed',
+under_bed = room {
+	nam = 'under_bed',
 
 	disp = 'Под кроватью',
 
@@ -13,26 +13,25 @@ underBed = room {
 			p [[Под кроватью очень темно. Ничего не видно.]];
 		end
 
-		p [[^^{leaveUnderBed|Вылезти из-под кровати}]];
+		p [[^^{leave_under_bed|Вылезти из-под кровати}]];
 	end;
 
 	obj = {
-		'leaveUnderBed',
+		'leave_under_bed',
 	};
 
 	way = {
-		'nearBed',
+		'near_bed',
 	};
 };
 
 -- Transitions
 
-leaveUnderBed = obj {
-	nam = 'leaveUnderBed',
+leave_under_bed = obj {
+	nam = 'leave_under_bed',
 
 	act = function(s)
 		p [[Вы выбираетесь из-под кровати.]];
-		walk('nearBed');
+		walk('near_bed');
 	end;
 };
-

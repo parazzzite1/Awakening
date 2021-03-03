@@ -15,11 +15,11 @@ game.use = 'Не сработает...';
 game.player = player {
 	nam = 'player',
 	room = 'main',
-	awoke = false,
-	gotUpOnce = false,
-	standing = false,
-	dressed = false,
-	nudist = false	
+	is_awoken = false,
+	is_got_up_once = false,
+	is_standing = false,
+	is_dressed = false,
+	nudist = false
 };
 
 -- Room
@@ -29,43 +29,41 @@ main = room {
 	disp = "Кровать";
 
 	dsc = function()
-		if not me().awoke then
+		if not me().is_awoken then
 			p [[Вы чувствуете что проснулись. Голова немного гудит. Открыв глаза вы видите знакомый белый потолок.]];
-		elseif me().gotUpOnce ~= true then
+		elseif me().is_got_up_once ~= true then
 			p [[Вы проснулись и лежите на кровати. Что дальше?]];
-		else 
+		else
 			p [[Вы лежите на кровати. Что дальше?]];
 		end
 	end;
 
 	decor = function(s)
-		p [[{lookAtCeiling|Осмотреть потолок}]];
-		p [[^^{lookAround|Встать и осмотреться}]];
+		p [[{look_at_ceiling|Осмотреть потолок}]];
+		p [[^^{look_around|Встать и осмотреться}]];
 	end;
 
-	obj = { 
-		'lookAtCeiling',
-		'lookAround'
+	obj = {
+		'look_at_ceiling',
+		'look_around'
 	};
 };
 
 -- Transitions
 
 require "ceiling.index"
-require "nearBed.index"
+require "near_bed.index"
 
-lookAround = obj {
-	nam = 'lookAround',
-	
-	act = function() 
+look_around = obj {
+	nam = 'look_around',
+
+	act = function()
 		p [[Вы встаете с кровати. Солнечный свет из окна бьет прямо в лицо.]];
 
-		me().awoke = true;
-		me().gotUpOnce = true;
-		me().standing = true;
-		
-		walk('nearBed');
+		me().is_awoken = true;
+		me().is_got_up_once = true;
+		me().is_standing = true;
+
+		walk('near_bed');
 	end;
 };
-
-

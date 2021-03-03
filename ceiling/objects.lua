@@ -48,7 +48,7 @@ paper = obj {
 	end;
 
 	tak = function()
-		if me().standing then
+		if me().is_standing then
 			p [[Вы подпрыгиваете и хватаете бумажку так, что паутина ходит ходуном. Паук напуган.]];
 			return true;
 		else

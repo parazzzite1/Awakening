@@ -1,9 +1,9 @@
 
 -- Actions
 
-investigateFrame = obj {
-	nam = 'investigateFrame',
-	
+investigate_frame = obj {
+	nam = 'investigate_frame',
+
 	act = function(s)
 		if frame.is_shut then
 			if latch.is_locked then
@@ -19,19 +19,19 @@ investigateFrame = obj {
 			end
 		end
 
-		window.obj:del(openCloseFrame);
+		window.obj:del(open_close_frame);
 		window.obj:del(latch);
-		
-		window.obj:add(openCloseFrame);
+
+		window.obj:add(open_close_frame);
 		window.obj:add(latch);
 
 	end;
 
 };
 
-openCloseFrame = obj {
-	nam = 'openCloseFrame',
-	
+open_close_frame = obj {
+	nam = 'open_close_frame',
+
 	act = function(s)
 		if latch.is_locked then
 			if frame.is_shut then
@@ -39,10 +39,10 @@ openCloseFrame = obj {
 			else
 				p [[Пока шпингалет опущен, створки не закрыть.]];
 			end
-			
+
 			return false;
 		end
-		
+
 		frame.is_shut = not frame.is_shut;
 		if frame.is_shut then
 			p [[Вы закрыли окно.]];
@@ -53,4 +53,3 @@ openCloseFrame = obj {
 		return true;
 	end;
 };
-

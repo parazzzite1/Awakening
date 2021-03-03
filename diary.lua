@@ -2,13 +2,13 @@
 -- Objects
 
 diary = obj {
-	state = false;
+	is_opened = false;
 	notes = {};
 
 	nam = 'diary';
 
 	disp = function(s)
-		if s.state then
+		if s.is_opened then
 			return fmt.u("Дневник");
 		end
 
@@ -16,12 +16,12 @@ diary = obj {
 	end;
 
 	inv = function(s)
-		s.state = not s.state;
-		if s.state then
+		s.is_opened = not s.is_opened;
+		if s.is_opened then
 			for i, note in ipairs(s.notes) do
 				s.obj:add(note);
 			end
-			
+
 			if s.obj:empty() then
 				p [[Нет записей.]];
 			end
@@ -47,7 +47,7 @@ function note_looking_usage(s, w)
 		remove(w);
 		table.insert(s.notes, w);
 		p [[Вы вложили новую записку в дневник.]];
-		if s.state then
+		if s.is_opened then
 			s.obj:add(w);
 		end
 
@@ -65,4 +65,3 @@ function note_in_diary(n, d)
 
 	return false;
 end
-

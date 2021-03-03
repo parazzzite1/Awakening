@@ -1,14 +1,14 @@
 
 -- Room
 
-windowView = room {
-	nam = 'windowView',
+window_view = room {
+	nam = 'window_view',
 	disp = 'Вид из окна',
 	dsc = [[Из окна открывается вид на дальние луга и холмы.]],
-	
+
 	obj = {
 		'forest',
-		'church'	
+		'church'
 	};
 
 	way = { 'window' };
@@ -33,4 +33,3 @@ church = obj {
 		p [[Церковь находится довольно далеко. Кажется, она заброшена.]];
 	end;
 };
-

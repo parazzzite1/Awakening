@@ -9,7 +9,7 @@ workbench = room {
 	way = {
 		'desk',
 		'window',
-		'nearBed'
+		'near_bed'
 	};
 
 	decor = function(s)
@@ -36,4 +36,3 @@ workbench = room {
 -- Objects
 
 require "workbench.objects.index"
-

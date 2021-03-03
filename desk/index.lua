@@ -5,7 +5,7 @@ desk = room {
 	nam = 'desk',
 	disp = "Письменный стол",
 	way = {
-		'nearBed',
+		'near_bed',
 		'window',
 		'workbench'
 	};
