@@ -1,7 +1,7 @@
 require "ceiling" 
 require "window"
-
 require "desk"
+require "workbench"
 
 -- Room
 
@@ -28,7 +28,8 @@ nearBed = room {
 
 	way = {
 		'window',
-		'desk'
+		'desk',
+		'workbench'
 	};
 
 	onexit = function(s,t)
@@ -72,12 +73,12 @@ chair = obj {
 };
 
 clothes = obj {
+	is_wearing = false,
+	is_wettable = true,
+
 	nam = 'clothes',
-
-	wearing = false,
-
 	disp = function(s)
-		if s.wearing then
+		if s.is_wearing then
 			return "Одежда (надето)"
 		else
 			return "Одежда"
@@ -88,19 +89,19 @@ clothes = obj {
 
 	inv = function(s)
 		local currentRoom = here();
-		if s.wearing and currentRoom.nam ~= 'nearBed' and currentRoom.nam ~= 'main' then
+		if s.is_wearing and currentRoom.nam ~= 'nearBed' and currentRoom.nam ~= 'main' then
 			p "Лучше не стоит.";
 			return false;
 		end
 
-		if s.wearing then
+		if s.is_wearing then
 			p "Вы разделись.";
 			me().dressed = false;
-			s.wearing = false;
+			s.is_wearing = false;
 		else
 			p "Вы оделись.";
 			me().dressed = true;
-			s.wearing = true;
+			s.is_wearing = true;
 		end
 
 		if me().standing ~= true then
@@ -111,14 +112,13 @@ clothes = obj {
 	use = function(s,w)
 		if w.nam == 'chair' then
 			drop(s);
-			
-			if me().dressed and s.wearing then
+			if me().dressed and s.is_wearing then
 				me().dressed = false;
-				s.wearing = false;
+				s.is_wearing = false;
 
 				p [[Вы сняли одежду и повесили ее на стул.]];
 			else
-				s.wearing = false;
+				s.is_wearing = false;
 
 				p [[Вы повесили одежду на стул.]];
 			end

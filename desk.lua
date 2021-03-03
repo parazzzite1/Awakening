@@ -1,3 +1,6 @@
+require "diary"
+require "workbench"
+
 
 -- Room
 
@@ -6,7 +9,8 @@ desk = room {
 	disp = "Письменный стол",
 	way = {
 		'nearBed',
-		'window'
+		'window',
+		'workbench'
 	};
 
 	decor = function(s)
@@ -60,10 +64,12 @@ clips = obj {
 			p [[Действительно, почему бы не скрепить скрепками для бумаги бумагу? Но может быть попытаться использовать их как-то иначе?]];
 			return false;
 		elseif w.nam == 'folder' then
-			p [[С помощью скрепок вам удается превратить старую папку в что-то на подобие книжного преплета.]];
 			remove(s);
 			remove(w);
 			take('binding');
+
+			p [[С помощью скрепок вам удается превратить старую папку в что-то на подобие книжного преплета.]];
+
 			return true;
 		end
 		
@@ -73,14 +79,15 @@ clips = obj {
 
 lamp = obj {
 	nam = 'lamp',
-
-	filled = false,
-	on = false,
+	
+	is_fillable = true,
+	is_filled = false,
+	is_on = false,
 
 	tak = "Вы взяли керасиновую лампу.",
 
 	disp = function(s)
-		if s.on then
+		if s.is_on then
 			return "Лампа (горит)"
 		else
 			return "Лампа (не горит)"
@@ -89,17 +96,54 @@ lamp = obj {
 
 
 	inv = function(s)
-		if not lamp.filled then
+		if not lamp.is_filled then
 			p [["... и врут календaри ..." В лампе нет керасина. Надо наполнить ее, пережде чем использовать.]];
 		else
-			if not s.on then
-				p [[Вы включаете лампу и из нее тут же начинает струиться теплый свет.]];
-				s.on = true;
+			if not s.is_on then
+				p [[Вы включаете лампу и из нее начинает струиться теплый свет.]];
+				s.is_on = true;
 			else
 				p [[Вы выключаете лампу.]];
-				s.on = false;
+				s.is_on = false;
 			end
 		end
+	end;
+
+	use = function(s, w)
+		if w.nam == 'pot' and w.is_investigated and w.substance.nam == 'kerosene' then
+			p [[Вы пытаетесь засунуть лампу в банку с керосином, но тщетно.]];
+		end
+
+		return false;
+	end;
+
+	used = function(s, w)
+		if w.nam == 'pot' then
+			if not s.is_filled and w.is_investigated and w.substance and w.substance.nam == 'kerosene' then
+				s.is_filled = true;
+				w.substance = nil;
+
+				p [[Вы наполняете керасиновую лампу. Да будет свет!]];
+			else
+				if not w.is_investigated then
+					p [[Надо сначала понять, что в банке.]];
+				elseif not w.substance then
+					p [[Вы наполняете лампу пустотой. Ну то есть, ничем вы ее не наполняете. Да.]];
+				end
+
+				if s.is_filled then
+					p [[Кстати, лампа и так полная.]];
+				end
+
+			
+			end
+			
+			return true;
+		elseif w.nam == 'hummer' then
+			p [[Лампа еще пригодится.]];
+		end
+
+		return false;
 	end;
 };
 
@@ -136,73 +180,17 @@ function papersUsage(s, w)
 		p [[Это не папка, а смех один. Для хранения бумаги стоит найти что-то более подходящее.]];
 		return false;
 	elseif w.nam == 'binding' then
-		p [[То, что надо. Теперь у вас есть что-то на подобие дневника для записей.]];
 		remove(s);
 		remove(w);
 		take('diary');
+
+		p [[То, что надо. Теперь у вас есть что-то на подобие дневника для записей.]];
+
 		return true;
 	end
 
 	return false
 end;
-
-diary = obj {
-	state = false;
-	notes = {};
-
-	nam = 'diary';
-
-	disp = function(s)
-		if s.state then
-			return fmt.u("Дневник");
-		end
-
-		return "Дневник";
-	end;
-
-	inv = function(s)
-		s.state = not s.state;
-		if s.state then
-			for i, note in ipairs(s.notes) do
-				s.obj:add(note);
-			end
-			
-			if s.obj:empty() then
-				p [[Нет записей.]];
-			end
-		else
-			s.obj:zap();
-		end
-    	end;
-
-	used = function(s,w)
-		return noteLookingUsage(s,w);
-	end;
-};
-
-function noteLookingUsage(s, w)
-	if w.noteLooking and not noteInDiary(w, s) then
-		remove(w);
-		table.insert(s.notes, w);
-		p [[Вы вложили новую записку в дневник.]]
-		if s.state then
-			s.obj:add(w);
-		end
-
-		return true;
-	end
-	return false;
-end
-
-function noteInDiary(n, d)
-	for i, note in ipairs(d.notes) do
-		if note == n then
-			return true;
-		end
-	end
-
-	return false;
-end
 
 -- Transitions
 

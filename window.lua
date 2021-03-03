@@ -16,7 +16,7 @@ window = room {
 		end
 
 		if s.obj:srch('openCloseFrame') then
-			if frame.shut then
+			if frame.is_shut then
 				p [[^^{openCloseFrame|Открыть окно}]];
 			else
 				p [[^^{openCloseFrame|Закрыть окно}]];
@@ -24,7 +24,7 @@ window = room {
 		end
 
 		if s.obj:srch('latch') then
-			if latch.locked then
+			if latch.is_locked then
 				p [[^^{latch|Шпингалет} опущен.]];
 			else
 				p [[^^{latch|Шпингалет} поднят.]];
@@ -46,7 +46,8 @@ window = room {
 
 	way = { 
 		'nearBed',
-		'desk'
+		'desk',
+		'workbench'
 	};
 };
 
@@ -55,22 +56,36 @@ window = room {
 latch = obj {
 	nam = 'latch',
 
-	locked = false,
+	is_locked = false,
 	
 	act = function(s)
 		p [[Старый немного проржавевший шпингалет ]];
-		if s.locked then
+		if s.is_locked then
 			p [[^^Чтобы поднять его, понадобится какой-нибудь подходящий инструмент.]];
 		else
 			p [[^^Чтобы опустить его, понадобится какой-нибудь подходящий инструмент.]];
 		end
 	end;
+
+	used = function(s, w)
+		if w.nam == 'hummer' then
+			s.is_locked = not s.is_locked;
+			if s.is_locked then
+				p [[Один точный удар молотка, и шпингалет опущен.]];
+			else
+				p [[Вы используете рукоять молотка как рычаг, чтобы поднять шпингалет. Голова!]];
+			end
+
+			return true;
+		end
+
+		return false;
+	end;
 };
 
 frame = obj {
+	is_shut = true,
 	nam = 'frame',
-
-	shut = true
 };
 
 -- Transitions
@@ -89,14 +104,14 @@ investigateFrame = obj {
 	nam = 'investigateFrame',
 	
 	act = function(s)
-		if frame.shut then
-			if latch.locked then
+		if frame.is_shut then
+			if latch.is_locked then
 				p [[Оконные створки надежно закрыты, шпингалет опущен. Чтобы открыть окно нужно сначала поднять шпингалет.]];
 			else
 				p [[Оконные створки закрыты, но болтаются, т.к. шпингалет поднят. Любой сильный порыв ветра может с легкостью распахнуть их.]];
 			end
 		else
-			if latch.locked then
+			if latch.is_locked then
 				p [[Окно распахнуто настежь. Пока шпингалет опущен, створки не закрыть.]];
 			else
 				p [[Окно распахнуто настежь, шпингалет поднят.]];
@@ -117,18 +132,24 @@ openCloseFrame = obj {
 	nam = 'openCloseFrame',
 	
 	act = function(s)
-		if latch.locked then
+		if latch.is_locked then
+			if frame.is_shut then
+				p [[Пока шпингалет опущен, створки не открыть.]];
+			else
+				p [[Пока шпингалет опущен, створки не закрыть.]];
+			end
+			
 			return false;
 		end
-
-		if frame.shut then
-			frame.shut = false;
-			p [[Вы открыли окно.]];
-		else
-			frame.shut = true;
+		
+		frame.is_shut = not frame.is_shut;
+		if frame.is_shut then
 			p [[Вы закрыли окно.]];
+		else
+			p [[Вы открыли окно окно.]];
 		end
 
+		return true;
 	end;
 };
 
