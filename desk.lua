@@ -141,6 +141,7 @@ lamp = obj {
 			return true;
 		elseif w.nam == 'hummer' then
 			p [[Лампа еще пригодится.]];
+			return true;
 		end
 
 		return false;

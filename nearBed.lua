@@ -109,7 +109,7 @@ clothes = obj {
 		end;
 	end;
 
-	use = function(s,w)
+	use = function(s, w)
 		if w.nam == 'chair' then
 			drop(s);
 			if me().dressed and s.is_wearing then
@@ -130,6 +130,26 @@ clothes = obj {
 		else
 			return false;
 		end;
+	end;
+
+	used = function(s, w)
+		if w.nam == 'pot' then
+			if not w.is_investigated then
+				return false;
+			end
+
+			if w.substance and w.substance.nam == 'kerosene' then
+				if s.is_wearing then
+					p [[Обливать себя керосином - не самая лучшая идея.]];
+				else
+					p [[Одежда скорее всего еще понадобится. Да и керосин тоже.]];
+				end
+			else
+				p [[Лучше не стоит.]];
+			end
+		end
+		
+		return false;
 	end;
 };
 

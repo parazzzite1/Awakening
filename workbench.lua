@@ -91,10 +91,18 @@ pot = obj {
 
 
 	use = function(s, w)
-		if w.is_substance then
+		if not s.is_investigated then
+			p[[Сначал надо понять что в банке.]];
+			return false;
+		end
+
+		if not s.substance and w.is_substance then
+			-- Позволяем набрать в банку любую субстанцию, если она (банка) пустая
 			s.substance = w;
 			return true;
-		elseif w.is_fillable then
+		elseif s.substance and w.is_fillable or w.is_wettable then
+			-- Позволяем наполнить/намочить любой подходящий объект (если в банке что-то есть).
+			-- Станет ли при этом банка пустой, решается в объекте, на который банка применяется.
 			return true;
 		else
 			return false;

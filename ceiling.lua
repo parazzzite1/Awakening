@@ -6,7 +6,7 @@ ceiling = room {
 
 	dsc = function()
 		p [[На белой штукатурке местами виднеются желтоватые пятна - должно быть, крыша протекает во время сильных дождей.]];
-		if me().standing ~= true then
+		if not me().standing then
 			p [[^^Кажется в дальнем углу виднеется старая паутина.]];
 		end;
 	end;
@@ -26,7 +26,7 @@ lookAtCeiling = obj {
 	act = function(s)
 		me().awoke = true;
 		
-		if me().standing ~= true then
+		if not me().standing then
 			p [[Приподняв голову с подушки вы бегло оглядываете потолок. Наверное, лучше встать с кровати чтобы разобрать больше деталей.]];
 			ceiling.obj:del('web');
 		else
@@ -72,13 +72,15 @@ spider = obj {
 paper = obj {
 	nam = 'paper',
 	
-	read = false,
-	noteLooking = true,
+	is_read = false,
+	
+	-- Признак того, что это записка (и ее можно переместить в дневник, например)
+	is_note_looking = true,
 	
 	dsc = [[В паутине застрял {кусочек бумаги}.]],
 
 	disp = function(s)
-		if s.read then
+		if s.is_read then
 			p "Бумажка (прочитано)";
 		else
 			p "Бумажка";
@@ -86,8 +88,8 @@ paper = obj {
 	end;
 
 	inv = function(s)
+		s.is_read = true;
 		p [[На бумажке написано: "Оставь паука в покое".]];
-		s.read = true;
 	end;
 
 	tak = function()

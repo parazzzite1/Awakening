@@ -30,15 +30,22 @@ diary = obj {
     	end;
 
 	used = function(s,w)
-		return noteLookingUsage(s,w);
+		if w.is_note_looking then
+			return note_looking_usage(s, w);
+		elseif w.nam == 'pot' and w.substance and w.substance.nam == 'kerosene' then
+			p [[Дневник еще пригодится. Керосин тоже.]];
+			return true;
+		end
+
+		return false;
 	end;
 };
 
-function noteLookingUsage(s, w)
-	if w.noteLooking and not noteInDiary(w, s) then
+function note_looking_usage(s, w)
+	if w.is_note_looking and not note_in_diary(w, s) then
 		remove(w);
 		table.insert(s.notes, w);
-		p [[Вы вложили новую записку в дневник.]]
+		p [[Вы вложили новую записку в дневник.]];
 		if s.state then
 			s.obj:add(w);
 		end
@@ -48,7 +55,7 @@ function noteLookingUsage(s, w)
 	return false;
 end
 
-function noteInDiary(n, d)
+function note_in_diary(n, d)
 	for i, note in ipairs(d.notes) do
 		if note == n then
 			return true;
