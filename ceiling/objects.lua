@@ -22,16 +22,24 @@ spider = obj {
 	act = function()
 		p [[Паук-крестовик. Частый гость в сельских домах.]];
 	end;
+
+	used = function(s, w)
+		if w.nam == 'pot' and not pot.substance then
+			p [[Почуяв неладное, паук спешит забраться повыше. Жестяная банка ему явно не по вкусу.]];
+			return true;
+		end
+		return false;
+	end;
 };
 
 paper = obj {
 	nam = 'paper',
-	
+
 	is_read = false,
-	
+
 	-- Признак того, что это записка (и ее можно переместить в дневник, например)
 	is_note_looking = true,
-	
+
 	dsc = [[В паутине застрял {кусочек бумаги}.]],
 
 	disp = function(s)
@@ -56,4 +64,3 @@ paper = obj {
 		end
 	end;
 };
-
