@@ -6,8 +6,8 @@ desk = room {
 	disp = "Письменный стол",
 	way = {
 		'near_bed',
+		'workbench',
 		'window',
-		'workbench'
 	};
 
 	decor = function(s)
@@ -15,7 +15,7 @@ desk = room {
 		if s.obj:srch('folder') then
 			p [[^^На ней валяется пустая {folder|папка} для бумаг и несколько исписанных листов.]];
 		end;
-		
+
 		if s.obj:srch('lamp') then
 			p [[В углу стола стоит керасиновая {lamp|лампа}.]];
 		end;
@@ -38,4 +38,3 @@ require "diary"
 -- Transitions
 
 -- Actions
-

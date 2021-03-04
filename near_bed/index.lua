@@ -23,9 +23,9 @@ near_bed = room {
 	};
 
 	way = {
-		'window',
 		'desk',
-		'workbench'
+		'workbench',
+		'window',
 	};
 
 	onexit = function(s,t)

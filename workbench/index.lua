@@ -8,8 +8,8 @@ workbench = room {
 
 	way = {
 		'desk',
+		'near_bed',
 		'window',
-		'near_bed'
 	};
 
 	decor = function(s)
