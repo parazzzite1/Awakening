@@ -29,17 +29,21 @@ window = room {
 				p [[^^{latch|Шпингалет} поднят.]];
 			end
 		end
+
+		if s.obj:srch('get_out') then
+			p [[^^{get_out|Перелезть через окно}]];
+		end
+
 	end;
 
 	obj = {
 		'transition_window_view',
-		'investigate_frame'
+		'investigate_frame',
 	};
 
 	onenter = function(s,f)
 		if f.nam ~= 'window_view' then
 			p [[Вы подходите к окну.]];
-
 		end
 	end;
 
@@ -57,12 +61,26 @@ require "window.objects"
 -- Transitions
 
 require "window_view"
+require "pathway_start"
 
 transition_window_view = obj {
 	nam = 'transition_window_view',
 
 	act = function(s)
 		walk('window_view');
+	end;
+};
+
+get_out = obj {
+	nam = 'get_out',
+
+	act = function(s)
+		if inv():srch('diary') then
+			p [[Вы выбираетесь через окно на улицу.]];
+			walk('pathway_start');
+		else
+			p [[Прежде чем идти дальше, нужно обзавестить чем-то вроде блокнота для записей.]];
+		end
 	end;
 };
 
