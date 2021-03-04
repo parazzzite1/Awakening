@@ -42,7 +42,7 @@ window = room {
 	};
 
 	onenter = function(s,f)
-		if f.nam ~= 'window_view' then
+		if f.nam ~= 'window_view' and f.nam ~= 'pathway_start' then
 			p [[Вы подходите к окну.]];
 		end
 	end;
