@@ -10,6 +10,14 @@ window = room {
 			p [[Из окна открывается {transition_window_view|вид} на дальние луга и холмы.]];
 		end
 
+		if s.obj:srch('latch') then
+			if latch.is_locked then
+				p [[{latch|Шпингалет} опущен.]];
+			else
+				p [[{latch|Шпингалет} поднят.]];
+			end
+		end
+
 		if s.obj:srch('investigate_frame') then
 			p [[^^{investigate_frame|Изучить окно}]];
 		end
@@ -19,14 +27,6 @@ window = room {
 				p [[^^{open_close_frame|Открыть окно}]];
 			else
 				p [[^^{open_close_frame|Закрыть окно}]];
-			end
-		end
-
-		if s.obj:srch('latch') then
-			if latch.is_locked then
-				p [[^^{latch|Шпингалет} опущен.]];
-			else
-				p [[^^{latch|Шпингалет} поднят.]];
 			end
 		end
 
