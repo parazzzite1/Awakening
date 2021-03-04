@@ -3,7 +3,7 @@
 
 lamp = obj {
 	nam = 'lamp',
-	
+
 	is_fillable = true,
 	is_filled = false,
 	is_on = false,
@@ -34,7 +34,7 @@ lamp = obj {
 	end;
 
 	use = function(s, w)
-		if w.nam == 'pot' and w.is_investigated and w.substance and w.substance.nam == 'kerosene' then
+		if is_pot_with_kerosene(w) then
 			p [[Вы пытаетесь засунуть лампу в банку с керосином, но тщетно.]];
 		end
 
@@ -42,27 +42,22 @@ lamp = obj {
 	end;
 
 	used = function(s, w)
-		if w.nam == 'pot' then
-			if not s.is_filled and w.is_investigated and w.substance and w.substance.nam == 'kerosene' then
+		if is_pot(w) then
+			if not s.is_filled and is_pot_with_kerosene(w) then
 				s.is_filled = true;
 				w.substance = nil;
 
 				p [[Вы наполняете керосиновую лампу. Да будет свет!]];
-			else
-				if not w.is_investigated then
-					p [[Надо сначала понять, что в банке.]];
-				elseif not w.substance then
+
+				return true
+			elseif is_investigated_empty_pot(w) then
 					p [[Вы наполняете лампу пустотой. Ну то есть, ничем вы ее не наполняете. Да.]];
-				end
+					if s.is_filled then
+						p [[Кстати, лампа и так полная.]];
+					end
 
-				if s.is_filled then
-					p [[Кстати, лампа и так полная.]];
-				end
-
-			
+					return true
 			end
-			
-			return true;
 		elseif w.nam == 'hummer' then
 			p [[Лампа еще пригодится.]];
 			return true;

@@ -8,14 +8,12 @@ pot = obj {
 	nam = 'pot',
 
 	disp = function(s)
-		if not s.is_investigated and s.substance then
+		if is_misterious_pot_with_something(s) then
 			return  "Банка (с чем-то)";
+		elseif is_investigated_pot_with_something(s) then
+			return string.format("Банка (%s)", std.dispof(s.substance));
 		else
-			if not s.substance then
-				return "Банка (пусто)";
-			else
-				return string.format("Банка (%s)", std.dispof(s.substance));
-			end
+			return "Банка (пусто)";
 		end
 	end;
 
@@ -30,7 +28,7 @@ pot = obj {
 	end;
 
 	inv = function(s)
-		if not s.is_investigated and s.substance then
+		if is_misterious_pot_with_something(s) then
 			s.is_investigated = true;
 			return string.format("Вы открываете банку и изучаете содержимое - в ней %s.", std.dispof(s.substance));
 		elseif s.substance then
@@ -52,8 +50,8 @@ pot = obj {
 			-- Позволяем набрать в банку любую субстанцию, если она (банка) пустая
 			s.substance = w;
 			return true;
-		elseif s.substance and w.is_fillable or w.is_wettable then
-			-- Позволяем наполнить/намочить любой подходящий объект (если в банке что-то есть).
+		elseif s.is_investigated and s.substance and (w.is_fillable or w.is_wettable) then
+			-- Позволяем наполнить/намочить любой подходящий объект (если в банке что-то есть и игрок знает, что это).
 			-- Станет ли при этом банка пустой, решается в объекте, на который банка применяется.
 			return true;
 		else
@@ -63,13 +61,13 @@ pot = obj {
 
 	used = function(s, w)
 		if w.nam == 'hummer' then
-			if not s.is_investigated then
+			if is_misterious_pot_with_something(s) then
 				p [[Сначала надо узнать что в банке - вдруг там нитроглицерин?]];
 				return true;
-			elseif s.is_investigated and s.substance and s.substance.nam == 'kerosene' then
+			elseif is_pot_with_kerosene(s) then
 				p [[На мгновение вас одолевает желание обмокнуть молоток в керосин и поджечь, но ... не время быть богом огня.]]
 				return true;
-			elseif not s.substance then
+			elseif is_empty_pot(s) then
 				p [[Преисполняясь первобытной радостью, вы с удовольствием колотите молотком по пустой банке - звук гулкий и приятный.]]
 				return true;
 			end
@@ -81,11 +79,4 @@ pot = obj {
 
 -- Utils
 
-function pot_extra_inv_msg(s)
-	if s.substance.nam == 'kerosene' then
-		return " Теперь мы можем зажечь.";
-	end
-
-	return '';
-end;
-
+require "workbench.objects.pot.utils"

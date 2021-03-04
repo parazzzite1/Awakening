@@ -17,5 +17,4 @@ kerosene = obj {
 	disp = 'керосин';
 };
 
-require "workbench.objects.pot"
-
+require "workbench.objects.pot.index"
