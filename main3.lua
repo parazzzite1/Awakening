@@ -3,8 +3,8 @@
 
 require "fmt"
 
-fmt.dash = true
-fmt.quotes = true
+fmt.dash = true;
+fmt.quotes = true;
 
 -- Game Init
 
@@ -30,11 +30,15 @@ main = room {
 
 	dsc = function()
 		if not me().is_awoken then
-			p [[Вы чувствуете что проснулись. Голова немного гудит. Открыв глаза вы видите знакомый белый потолок.]];
-		elseif me().is_got_up_once ~= true then
-			p [[Вы проснулись и лежите на кровати. Что дальше?]];
+			p [[
+				Вы чувствуете что проснулись.
+				Голова немного гудит.
+				Открыв глаза вы видите белый потолок.
+			]];
+		elseif not me().is_got_up_once then
+			p [[Вы проснулись и лежите на кровати.]];
 		else
-			p [[Вы лежите на кровати. Что дальше?]];
+			p [[Вы лежите на кровати.]];
 		end
 	end;
 

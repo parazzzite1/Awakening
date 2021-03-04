@@ -33,7 +33,7 @@ diary = obj {
 	used = function(s,w)
 		if w.is_note_looking then
 			return note_looking_usage(s, w);
-		elseif w.nam == 'pot' and w.is_investigated and w.substance and w.substance.nam == 'kerosene' then
+		elseif is_pot_with_kerosene(w) then
 			p [[Дневник еще пригодится. Керосин тоже.]];
 			return true;
 		end

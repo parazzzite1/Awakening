@@ -28,8 +28,8 @@ near_bed = room {
 		'window',
 	};
 
-	onexit = function(s,t)
-		if me().is_dressed or t.nam == 'main' or t.nam == 'ceiling' or t.nam == 'under_bed' then
+	onexit = function(s, t)
+		if is_transition_allowed(t) then
 			return true;
 		else
 			return [[Сначала неплохо бы одеться.]], false;
@@ -73,3 +73,9 @@ go_under_bed = obj {
 		walk('under_bed');
 	end;
 };
+
+-- Utils
+
+is_transition_allowed = function(t)
+	return me().is_dressed or t.nam == 'main' or t.nam == 'ceiling' or t.nam == 'under_bed';
+end;

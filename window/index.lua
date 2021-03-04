@@ -7,7 +7,9 @@ window = room {
 
 	decor = function(s)
 		if s.obj:srch('transition_window_view') then
-			p [[Из окна открывается {transition_window_view|вид} на дальние луга и холмы.]];
+			p [[
+				Из окна открывается {transition_window_view|вид} на дальние луга и холмы.
+			]];
 		end
 
 		if s.obj:srch('latch') then
@@ -79,7 +81,9 @@ get_out = obj {
 			p [[Вы выбираетесь через окно на улицу.]];
 			walk('pathway_start');
 		else
-			p [[Прежде чем идти дальше, нужно обзавестить чем-то вроде блокнота для записей.]];
+			p [[
+				Прежде чем идти дальше, нужно обзавестить чем-то вроде блокнота для записей.
+			]];
 		end
 	end;
 };
