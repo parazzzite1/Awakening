@@ -62,14 +62,18 @@ clothes = obj {
 	end;
 
 	used = function(s, w)
-		if is_pot_with_kerosene(w) then
-			if s.is_wearing then
-				p [[Обливать себя керосином - не самая лучшая идея.]];
-			else
-				p [[Одежда скорее всего еще понадобится. Да и керосин тоже.]];
+		if is_pot(w) then
+			if is_pot_with_kerosene(w) then
+				if s.is_wearing then
+					return [[Обливать себя керосином - не самая лучшая идея.]];
+				else
+					return [[Одежда скорее всего еще понадобится. Да и керосин тоже.]];
+				end
+			elseif is_investigated_pot_with_something(w) then
+				return [[Лучше не стоит.]]
 			end
 		end
 
-		return "Лучше не стоит.";
+		return false;
 	end;
 };

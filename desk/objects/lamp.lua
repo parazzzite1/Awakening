@@ -52,22 +52,24 @@ lamp = obj {
 
 				p [[Вы наполняете керосиновую лампу. Да будет свет!]];
 
-				return true
+				return true;
 			elseif is_investigated_empty_pot(w) then
-					p [[Вы наполняете лампу пустотой.
-						Ну то есть, ничем вы ее не наполняете. Да.
-					]];
-					if s.is_filled then
-						p [[Кстати, лампа и так полная.]];
-					end
+				p [[Вы наполняете лампу пустотой.
+					Ну то есть, ничем вы ее не наполняете. Да.
+				]];
+				if s.is_filled then
+					p [[Кстати, лампа и так полная.]];
+				end
 
-					return true
+				return true;
+			elseif is_investigated_pot_with_something(w) then
+				return "Лучше не стоит.", false;
 			end
 		elseif w.nam == 'hummer' then
 			p [[Лампа еще пригодится.]];
 			return true;
 		end
 
-		return  "Лучше не стоит", false;
+		return false;
 	end;
 };
