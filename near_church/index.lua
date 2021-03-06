@@ -2,13 +2,15 @@
 -- Room
 
 near_church = room {
+  is_visited = false;
+
   nam = 'near_church',
 
   disp = 'Окрестности церкви',
 
   decor = function()
     p [[
-      TODO: добавить описание.
+      TODO: добавить описание локации.
     ]];
   end;
 
@@ -23,6 +25,14 @@ near_church = room {
         p [[Вас начинает мучить жажда.]];
       else
         p [[Вода, которую вы взяли с собой, спасает от жажды.]];
+      end
+    end
+
+    if not s.is_visited then
+      s.is_visited = true;
+      local d = inv():srch('diary');
+      if d then
+        add_new_record(d, dr_old_church);
       end
     end
   end;
