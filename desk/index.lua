@@ -11,7 +11,7 @@ desk = room {
 	};
 
 	decor = function(s)
-		p [[Перед вами небольшой письменный стол c дубовой столешницей.]];
+		p [[Перед вами небольшой письменный стол c дубовой {tabletop|столешницей}.]];
 		if s.obj:srch('folder') then
 			p [[
 				^^На ней валяется пустая {folder|папка} для бумаг
@@ -27,6 +27,7 @@ desk = room {
 	end;
 
 	obj = {
+		'tabletop',
 		'lamp',
 		'folder',
 		'drawer'
