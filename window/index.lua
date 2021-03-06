@@ -33,7 +33,7 @@ window = room {
 		end
 
 		if s.obj:srch('get_out') then
-			p [[^^{get_out|Перелезть через окно}]];
+			p [[^^{get_out|Выбраться наружу}]];
 		end
 
 	end;
@@ -78,7 +78,7 @@ get_out = obj {
 
 	act = function(s)
 		if inv():srch('diary') then
-			p [[Вы выбираетесь через окно на улицу.]];
+			p [[Вы перелезаете через подоконник и оказываетесь на улице.]];
 			walk('pathway_start');
 		else
 			p [[
