@@ -46,9 +46,8 @@ pot = obj {
 			return false;
 		end
 
-		if not s.substance and w.is_substance then
+		if not s.substance and (w.is_substance or w.substance) then
 			-- Позволяем набрать в банку любую субстанцию, если она (банка) пустая
-			s.substance = w;
 			return true;
 		elseif s.is_investigated and s.substance and (w.is_fillable or w.is_wettable) then
 			-- Позволяем наполнить/намочить любой подходящий объект (если в банке что-то есть и игрок знает, что это).

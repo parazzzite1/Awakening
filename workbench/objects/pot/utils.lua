@@ -40,3 +40,13 @@ end;
 function is_pot_with_kerosene(s)
 	return is_investigated_pot_with_something(s) and s.substance.nam == 'kerosene';
 end;
+
+function get_substance(s)
+	if s.is_substance then
+		return s;
+	end
+
+	if s.substance then
+		return s.substance;
+	end
+end;
