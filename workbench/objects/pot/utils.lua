@@ -10,7 +10,7 @@ function pot_extra_inv_msg(s)
 end;
 
 function is_pot(s)
-	return s.nam == 'pot';
+	return s and s.nam == 'pot';
 end;
 
 function is_investigated_pot(s)
@@ -41,6 +41,10 @@ function is_pot_with_kerosene(s)
 	return is_investigated_pot_with_something(s) and s.substance.nam == 'kerosene';
 end;
 
+function is_pot_with_water(s)
+	return is_investigated_pot_with_something(s) and s.substance.nam == 'water';
+end;
+
 function get_substance(s)
 	if s.is_substance then
 		return s;
@@ -49,4 +53,8 @@ function get_substance(s)
 	if s.substance then
 		return s.substance;
 	end
+end;
+
+function erase_pot(s)
+	s.substance = nil;
 end;

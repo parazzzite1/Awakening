@@ -19,7 +19,8 @@ game.player = player {
 	is_got_up_once = false,
 	is_standing = false,
 	is_dressed = false,
-	nudist = false
+	nudist = false,
+	is_thirsty = false,
 };
 
 -- Room
