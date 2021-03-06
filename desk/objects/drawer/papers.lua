@@ -22,7 +22,7 @@ papers = obj {
 
 function papers_usage(s, w)
 	if w.nam == 'folder' then
-		p [[Это не папка, а смех один. Для хранения бумаги стоит найти что-то более подходящее.]];
+		p [[Это не папка, а смех один. Для хранения бумаг стоит найти что-то более подходящее.]];
 		return false;
 	elseif w.nam == 'binding' then
 		remove(s);

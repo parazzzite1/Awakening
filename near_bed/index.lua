@@ -47,7 +47,7 @@ require "ceiling.index"
 require "window.index"
 require "desk.index"
 require "workbench.index"
-require "under_bed"
+require "under_bed.index"
 
 lie_on_bed = obj {
 	nam = 'lie_on_bed',
