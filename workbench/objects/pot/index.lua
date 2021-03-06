@@ -34,7 +34,7 @@ pot = obj {
 		elseif s.substance then
 			return string.format("В банке %s.%s", std.dispof(s.substance), pot_extra_inv_msg(s));
 		else
-			return "Пустая банка. Может пригодиться.";
+			return "Пустая жестяная банка с плотно закрывающейся крышкой. Может пригодиться.";
 		end
 	end;
 
