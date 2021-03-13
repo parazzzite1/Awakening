@@ -39,15 +39,15 @@ near_bed = room {
 
 -- Objects
 
-require "near_bed.objects.index"
+require "house.near_bed.objects.index"
 
 -- Transitions
 
-require "ceiling.index"
-require "window.index"
-require "desk.index"
-require "workbench.index"
-require "under_bed.index"
+require "house.ceiling.index"
+require "house.window.index"
+require "house.desk.index"
+require "house.workbench.index"
+require "house.under_bed.index"
 
 lie_on_bed = obj {
 	nam = 'lie_on_bed',

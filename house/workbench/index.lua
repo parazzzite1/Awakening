@@ -35,4 +35,4 @@ workbench = room {
 
 -- Objects
 
-require "workbench.objects.index"
+require "house.workbench.objects.index"

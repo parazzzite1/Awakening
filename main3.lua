@@ -56,8 +56,8 @@ main = room {
 
 -- Transitions
 
-require "ceiling.index"
-require "near_bed.index"
+require "house.ceiling.index"
+require "house.near_bed.index"
 
 look_around = obj {
 	nam = 'look_around',

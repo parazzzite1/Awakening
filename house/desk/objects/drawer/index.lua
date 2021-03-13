@@ -1,8 +1,8 @@
 
 -- Objects
 
-require "desk.objects.drawer.papers"
-require "desk.objects.drawer.clips"
+require "house.desk.objects.drawer.papers"
+require "house.desk.objects.drawer.clips"
 
 drawer = obj {
 	nam = 'drawer',

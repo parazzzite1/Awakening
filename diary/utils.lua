@@ -15,6 +15,19 @@ function note_looking_usage(s, w)
 	return false;
 end
 
+function is_player_has_note(n)
+	local d = inv():srch('diary');
+	if d and is_note_in_diary(n, d) then
+		return true;
+	end
+
+	if inv():srch(n.nam) then
+		return true;
+	end
+
+	return false;
+end
+
 function is_note_in_diary(n, d)
 	for i, note in ipairs(d.notes) do
 		if note == n then

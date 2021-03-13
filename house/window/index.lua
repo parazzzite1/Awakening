@@ -58,12 +58,12 @@ window = room {
 
 -- Objects
 
-require "window.objects"
+require "house.window.objects"
 
 -- Transitions
 
-require "window.transitions"
+require "house.window.transitions"
 
 -- Actions
 
-require "window.actions"
+require "house.window.actions"

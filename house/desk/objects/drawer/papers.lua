@@ -1,8 +1,8 @@
 
 -- Objects
 
-require "desk.objects.folder"
-require "desk.objects.binding"
+require "house.desk.objects.folder"
+require "house.desk.objects.binding"
 
 papers = obj {
 	nam = 'papers',

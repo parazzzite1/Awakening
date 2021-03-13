@@ -1,7 +1,7 @@
 
 -- Objects
 
-require "under_bed.objects.lost_letter"
+require "house.under_bed.objects.lost_letter"
 
 twinkles = obj {
 	nam = 'twinkles',

@@ -1,7 +1,7 @@
 
 -- Objects
 
-require "desk.objects.binding"
+require "house.desk.objects.binding"
 
 clips = obj {
 	nam = 'clips',

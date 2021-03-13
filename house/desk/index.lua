@@ -36,7 +36,7 @@ desk = room {
 
 -- Objects
 
-require "desk.objects.index"
+require "house.desk.objects.index"
 require "diary.index"
 
 -- Transitions

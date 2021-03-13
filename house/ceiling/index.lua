@@ -53,4 +53,4 @@ look_at_ceiling = obj {
 
 -- Objects
 
-require "ceiling.objects"
+require "house.ceiling.objects"

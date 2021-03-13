@@ -33,7 +33,7 @@ under_bed = room {
 
 -- Objects
 
-require "under_bed.objects.index"
+require "house.under_bed.objects.index"
 
 -- Transitions
 

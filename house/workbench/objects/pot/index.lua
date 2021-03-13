@@ -88,4 +88,4 @@ pot = obj {
 
 -- Utils
 
-require "workbench.objects.pot.utils"
+require "house.workbench.objects.pot.utils"

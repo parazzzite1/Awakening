@@ -16,4 +16,4 @@ chair = obj {
 	};
 };
 
-require "near_bed.objects.clothes"
+require "house.near_bed.objects.clothes"

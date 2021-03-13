@@ -1,7 +1,7 @@
 
 -- Transitions
 
-require "window_view"
+require "house.window_view"
 require "pathway_start.index"
 
 transition_window_view = obj {
