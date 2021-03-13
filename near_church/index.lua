@@ -8,11 +8,15 @@ near_church = room {
 
   disp = 'Окрестности церкви',
 
-  decor = function()
+  decor = function(s)
     p [[
       Прямо перед вами возвышается старая {look_at_belltower|колокольня},
       а немного поодаль расположились руины каких-то строений.
     ]];
+
+    if s.obj:srch('to_belltower') then
+      p [[^^{to_belltower|Подняться на колокольню}]];
+    end
   end;
 
   way = {
@@ -42,14 +46,20 @@ near_church = room {
     end
   end;
 
-  onexit = function(s)
-    p [[Путь назад неблизкий. Сначала нужно закончить все дела здесь.]];
-    return false;
+  onexit = function(s, w)
+    if w.nam == 'pathway_start' then
+      p [[Путь назад неблизкий. Сначала нужно закончить все дела здесь.]];
+      return false;
+    end;
+
+    return true;
   end;
 };
 
 -- Objects
 
-require 'near_church.objects'
+require 'near_church.actions'
 
 -- Transitions
+
+require 'near_church.transitions'
