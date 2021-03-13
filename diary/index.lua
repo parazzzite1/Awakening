@@ -8,11 +8,16 @@ diary = obj {
 	nam = 'diary';
 
 	disp = function(s)
+		local label = "Дневник"
 		if s.is_opened then
-			return fmt.u("Дневник");
+			label = fmt.u("Дневник");
 		end
 
-		return "Дневник";
+		if has_unread_records(s) then
+			label = fmt.b(label);
+		end
+
+		return label;
 	end;
 
 	inv = function(s)

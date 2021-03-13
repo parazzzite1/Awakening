@@ -10,7 +10,8 @@ near_church = room {
 
   decor = function()
     p [[
-      TODO: добавить описание локации.
+      Прямо перед вами возвышается старая {look_at_belltower|колокольня},
+      а немного поодаль расположились руины каких-то строений.
     ]];
   end;
 
@@ -18,9 +19,13 @@ near_church = room {
     path { 'Вернуться к дому', 'pathway_start'},
   };
 
+  obj = {
+    'look_at_belltower',
+  };
+
   onenter = function(s, w)
-    if w.nam == 'bush' then
-      p [[Вы идете долго - около часа.]];
+    if w.nam == 'bush' and not s.is_visited then
+      p [[Спустя час вы выбираетесь из леса. ]];
       if me().is_thirsty then
         p [[Вас начинает мучить жажда.]];
       else
@@ -42,5 +47,9 @@ near_church = room {
     return false;
   end;
 };
+
+-- Objects
+
+require 'near_church.objects'
 
 -- Transitions

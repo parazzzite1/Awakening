@@ -2,7 +2,7 @@
 -- Utils
 
 function note_looking_usage(s, w)
-	if w.is_note_looking and not note_in_diary(w, s) then
+	if w.is_note_looking and not is_note_in_diary(w, s) then
 		remove(w);
 		table.insert(s.notes, w);
 		p [[Вы вложили новую записку в дневник.]];
@@ -15,9 +15,19 @@ function note_looking_usage(s, w)
 	return false;
 end
 
-function note_in_diary(n, d)
+function is_note_in_diary(n, d)
 	for i, note in ipairs(d.notes) do
 		if note == n then
+			return true;
+		end
+	end
+
+	return false;
+end
+
+function has_unread_records(d)
+	for i, r in ipairs(d.records) do
+		if not r.is_read then
 			return true;
 		end
 	end
